@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import QrList from '../../components/qrList/index.tsx'
 import UpLoadModal from '../../components/uploadModal/index.tsx'
 import UpTextOrUrl from '../../components/upTextOrUrl/index.tsx'
+import { isEmpty } from 'lodash'
 interface QRList {
   content: string
   description: string
@@ -15,7 +16,7 @@ export default function CreateQRcodeImg() {
     setQRcodeList([
       ...qRcodeList,
       {
-        content: img,
+        content: img || text,
         description: text,
         isImg: !!img,
       },
@@ -23,11 +24,19 @@ export default function CreateQRcodeImg() {
   }
 
   return (
-    <div>
-      <QrList data={qRcodeList} />
-      <div style={{ display: 'flex' }}>
+    <div
+      style={{
+        width: '100%',
+        border: '1px solid #ccc',
+        textAlign: 'center',
+      }}
+    >
+      <div style={{ lineHeight: '255px' }}>
+        {isEmpty(qRcodeList) ? <h1>NO DATA</h1> : <QrList data={qRcodeList} />}
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <UpLoadModal handleUpload={onUpload} />
-        <UpTextOrUrl />
+        <UpTextOrUrl handleUpload={onUpload} />
       </div>
     </div>
   )

@@ -35,6 +35,7 @@ export default function UploadModal(props) {
   }
 
   const handlePreview = async (file: UploadFile) => {
+    console.log(file)
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as RcFile)
     }
